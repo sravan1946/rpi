@@ -145,6 +145,7 @@ while True:
 
         else:
             COUNTER = 0
+            GPIO.output(11, GPIO.LOW)
             alarm_status = False
 
         if (distance > YAWN_THRESH):
