@@ -74,7 +74,7 @@ ap.add_argument("-w", "--webcam", type=int, default=0,
 args = vars(ap.parse_args())
 # set a gpio pin for output
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(11, GPIO.OUT)
+GPIO.setup(11, GPIO.OUT, initial=GPIO.LOW)
 
 
 EYE_AR_THRESH = 0.3
