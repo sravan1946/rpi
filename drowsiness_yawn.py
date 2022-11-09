@@ -72,9 +72,10 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-w", "--webcam", type=int, default=0,
                 help="index of webcam on system")
 args = vars(ap.parse_args())
-buzzer = 11
-# set GPIO Pins
+# set a gpio pin for output
 GPIO.setmode(GPIO.BOARD)
+GPIO.setup(11, GPIO.OUT)
+
 
 EYE_AR_THRESH = 0.3
 EYE_AR_CONSEC_FRAMES = 30
@@ -140,6 +141,7 @@ while True:
 
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+                GPIO.output(11, GPIO.HIGH)
 
         else:
             COUNTER = 0
