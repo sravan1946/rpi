@@ -3,36 +3,17 @@
 from scipy.spatial import distance as dist
 from imutils.video import VideoStream
 from imutils import face_utils
-from threading import Thread
 import numpy as np
 import argparse
 import imutils
 import time
 import dlib
 import cv2
-import os
 try:
     import RPi.GPIO as GPIO
 except RuntimeError:
     print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script")
 
-
-def alarm(msg):
-    global alarm_status
-    global alarm_status2
-    global saying
-
-    while alarm_status:
-        print('call')
-        s = 'espeak "'+msg+'"'
-        os.system(s)
-
-    if alarm_status2:
-        print('call')
-        saying = True
-        s = 'espeak "' + msg + '"'
-        os.system(s)
-        saying = False
 
 def eye_aspect_ratio(eye):
     A = dist.euclidean(eye[1], eye[5])
@@ -83,9 +64,6 @@ GPIO.setup(15, GPIO.OUT, initial=GPIO.HIGH)
 EYE_AR_THRESH = 0.3
 EYE_AR_CONSEC_FRAMES = 30
 YAWN_THRESH = 20
-alarm_status = False
-alarm_status2 = False
-saying = False
 COUNTER = 0
 
 print("-> Loading the predictor and detector...")
@@ -136,12 +114,6 @@ while True:
             COUNTER += 1
 
             if COUNTER >= EYE_AR_CONSEC_FRAMES:
-                if alarm_status == False:
-                    alarm_status = True
-                    t = Thread(target=alarm, args=('wake up sir',))
-                    t.deamon = True
-                    t.start()
-
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
                 GPIO.output(11, GPIO.HIGH)
@@ -152,18 +124,7 @@ while True:
             COUNTER = 0
             GPIO.output(11, GPIO.LOW)
             GPIO.output(13, GPIO.HIGH)
-            alarm_status = False
 
-        if (distance > YAWN_THRESH):
-            cv2.putText(frame, "Yawn Alert", (10, 30),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-            if alarm_status2 == False and not saying:
-                alarm_status2 = True
-                t = Thread(target=alarm, args=('take some fresh air sir',))
-                t.deamon = True
-                t.start()
-        else:
-            alarm_status2 = False
 
         cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
