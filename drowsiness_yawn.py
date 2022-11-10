@@ -57,7 +57,7 @@ GPIO.cleanup()
 # set a gpio pin for output
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(11, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(13, GPIO.OUT, initial=GPIO.HIGH)
+GPIO.setup(16, GPIO.OUT, initial=GPIO.HIGH)
 GPIO.setup(15, GPIO.OUT, initial=GPIO.HIGH)
 
 
@@ -117,13 +117,13 @@ while True:
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
                 GPIO.output(11, GPIO.HIGH)
-                GPIO.output(13, GPIO.LOW)
+                GPIO.output(16, GPIO.LOW)
                 
 
         else:
             COUNTER = 0
             GPIO.output(11, GPIO.LOW)
-            GPIO.output(13, GPIO.HIGH)
+            GPIO.output(16, GPIO.HIGH)
 
 
         cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30),
