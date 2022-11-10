@@ -76,6 +76,8 @@ GPIO.cleanup()
 # set a gpio pin for output
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(11, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(13, GPIO.OUT, initial=GPIO.HIGH)
+GPIO.setup(15, GPIO.OUT, initial=GPIO.HIGH)
 
 
 EYE_AR_THRESH = 0.3
@@ -93,8 +95,8 @@ predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
 
 
 print("-> Starting Video Stream")
-vs = VideoStream(src=args["webcam"]).start()
-#vs= VideoStream(usePiCamera=True).start()       //For Raspberry Pi
+#vs = VideoStream(src=args["webcam"]).start()
+vs= VideoStream(usePiCamera=True).start()      # //For Raspberry Pi
 time.sleep(1.0)
 
 while True:
@@ -143,10 +145,13 @@ while True:
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
                 GPIO.output(11, GPIO.HIGH)
+                GPIO.output(13, GPIO.LOW)
+                
 
         else:
             COUNTER = 0
             GPIO.output(11, GPIO.LOW)
+            GPIO.output(13, GPIO.HIGH)
             alarm_status = False
 
         if (distance > YAWN_THRESH):
