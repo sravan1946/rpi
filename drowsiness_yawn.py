@@ -116,13 +116,13 @@ while True:
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
                 GPIO.output(11, GPIO.HIGH)
-                GPIO.output(16, GPIO.LOW)
+                GPIO.output(16, GPIO.HIGH)
                 
 
         else:
             COUNTER = 0
             GPIO.output(11, GPIO.LOW)
-            GPIO.output(16, GPIO.HIGH)
+            GPIO.output(16, GPIO.LOW)
 
 
         cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30),
