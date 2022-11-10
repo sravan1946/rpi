@@ -67,8 +67,8 @@ YAWN_THRESH = 20
 COUNTER = 0
 
 print("-> Loading the predictor and detector...")
-detector = dlib.get_frontal_face_detector()
-#detector = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")    #Faster but less accurate
+#detector = dlib.get_frontal_face_detector()
+detector = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")    #Faster but less accurate
 predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
 
 
