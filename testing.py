@@ -1,5 +1,6 @@
-import RPi.GPIO as GPIO
 from time import sleep
+
+import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(16, GPIO.OUT, initial=GPIO.LOW)
